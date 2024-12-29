@@ -6,13 +6,13 @@ option go_package = "github.com/Mensurui/golang-testcontainers/protobuf";
 
 service UserService{
   rpc CheckHealth(CheckHealthRequest)
-    returns (CheckHealthResponse)
+    returns (CheckHealthResponse);
   
   rpc AddUser(AddUserRequest)
-    returns (AddUserResponse)
+    returns (AddUserResponse);
 
   rpc CheckUser(CheckUserRequest)
-    returns (CheckUserResponse)
+    returns (CheckUserResponse);
 }
 
 message CheckHealthRequest{
