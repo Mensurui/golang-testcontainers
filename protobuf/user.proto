@@ -2,4 +2,42 @@ syntax = "proto3";
 
 package protobuf;
 
-option go_package = ""
+option go_package = "github.com/Mensurui/golang-testcontainers/protobuf";
+
+service UserService{
+  rpc CheckHealth(CheckHealthRequest)
+    returns (CheckHealthResponse)
+  
+  rpc AddUser(AddUserRequest)
+    returns (AddUserResponse)
+
+  rpc CheckUser(CheckUserRequest)
+    returns (CheckUserResponse)
+}
+
+message CheckHealthRequest{
+
+}
+
+message CheckHealthResponse{
+  string message = 1;
+}
+
+message AddUserRequest{
+  string userName =1;
+  string email =2;
+  int32 age = 3;
+}
+
+message AddUserResponse{
+  string message = 1;
+}
+
+message CheckUserRequest{
+  int32 userID = 1;
+}
+
+message CheckUserResponse{
+  string user = 1;
+  string age = 2;
+}
