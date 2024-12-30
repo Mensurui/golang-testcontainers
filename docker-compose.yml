@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgres-1
+    environment:
+      POSTGRES_USER: testcontainer
+      POSTGRES_PASSWORD: testcontainer123
+      POSTGRES_DB: testcontainersdb
+    ports:
+      - "5433:5432"
+
+  goapp:
+    build: .
+    container_name: goapp-1
+    command: >
+      sh -c "
+      migrate -path /app/migrations -database 'postgres://testcontainer:testcontainer123@postgres-1:5432/testcontainerdb?sslmode=disable' up &&
+      ./goapp"
+    depends_on:
+      - postgres
+    environment:
+      TESTPORTADDR: ':9191'
+      TESTCONADDR: 'postgres://testcontainer:testcontainer123@postgres-1/testcontainersdb?sslmode=disable'
+    ports:
+      - "9191:9191"
+
+
+networks:
+  mynetwork:
+    driver: bridge

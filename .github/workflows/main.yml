@@ -1,0 +1,23 @@
+name: TestContainers
+on: [push, pull_request]
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Docker
+        run: docker build . --file Dockerfile --tag testcontainersGolang
+      - name: Login to Docker
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Push to Docker
+        run: |
+          docker tag testcontainersGolang ${{ secrets.DOCKER_USERNAME }}/testcontainersGolang:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/testcontainersGolang:latest
+
+ # Test:
+#Production:
