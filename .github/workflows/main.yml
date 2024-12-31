@@ -18,7 +18,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Push Docker image to Dockerhub
         run: |
-          docker tag clock2 ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
+          docker tag gotestcon ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
   Test:
     runs-on: ubuntu-latest
