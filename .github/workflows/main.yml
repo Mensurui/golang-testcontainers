@@ -34,6 +34,12 @@ jobs:
       - name: Run the Container
         run: |
           docker run -d --name gotestcon-container ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
+          for i in {1..10}; do
+            if [ "$(docker inspect -f '{{.State.Running}}' gotestcon-container)" == "true" ]; then
+              break
+            fi
+            sleep 1
+          done
           docker exec gotestcon-container go test -v ./...
           docker stop gotestcon-container
           docker rm gotestcon-container
