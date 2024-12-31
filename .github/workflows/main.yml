@@ -32,7 +32,7 @@ jobs:
           --health-cmd="pg_isready -U postgres"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5s
+          --health-retries=5
         env:
           POSTGRES_USER: testcontainer
           POSTGRES_PASSWORD: testcontainer123
@@ -48,7 +48,7 @@ jobs:
       - name: Run the Container
         run: |
           docker run -d --name gotestcon-container \
-            -e TESTCONADDR: 'postgres://testcontainer:testcontainer123@postgres-1:5432/testcontainersdb?sslmode=disable'\
+            -e TESTCONADDR='postgres://testcontainer:testcontainer123@postgres:5432/testcontainersdb?sslmode=disable' \
             ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
           for i in {1..10}; do
             if [ "$(docker inspect -f '{{.State.Running}}' gotestcon-container)" == "true" ]; then
@@ -74,8 +74,6 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
-
-
     steps:
       - name: Check out my code
         uses: actions/checkout@v4
@@ -98,6 +96,3 @@ jobs:
       - name: Tear down Docker Compose
         if: always()
         run: docker-compose down
-
- # Test:
-#Production:
