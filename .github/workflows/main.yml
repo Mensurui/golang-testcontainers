@@ -61,13 +61,25 @@ jobs:
       - name: Pull Docker image from DockerHub
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
 
+      - name: Create Docker Network
+        run: docker network create app-network
+
+      - name: Run the PostgreSQL Service
+        run: |
+          docker run --name postgres-container \
+          --network app-network \
+          -e POSTGRES_USER=testcontainer \
+          -e POSTGRES_PASSWORD=testcontainer123 \
+          -e POSTGRES_DB=testcontainersdb \
+          -d postgres:latest
+
       # Run the Container and Execute Tests
       - name: Run Tests in Docker Container
         run: |
           # Start the container
           docker run  -d --name gotestcon-container \
             -e TESTCONADDR='postgres://testcontainer:testcontainer123@postgres:5432/testcontainersdb?sslmode=disable' \
-            --network host \
+            --network app-network \
             ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
 
           # Wait for the container to be ready
