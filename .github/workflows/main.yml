@@ -65,9 +65,9 @@ jobs:
       - name: Run Tests in Docker Container
         run: |
           # Start the container
-          docker run -d --name gotestcon-container \
+          docker run  -d --name gotestcon-container \
+            -e TESTCONADDR='postgres://testcontainer:testcontainer123@postgres:5432/testcontainersdb?sslmode=disable' \
             --network host \
-            -e TESTCONADDR='postgres://testcontainer:testcontainer123@127.0.0.1:5432/testcontainersdb?sslmode=disable' \
             ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
 
           # Wait for the container to be ready
