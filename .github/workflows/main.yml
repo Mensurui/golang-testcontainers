@@ -27,7 +27,7 @@ jobs:
         run: |
           docker tag gotestcon ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
           docker push ${{ secrets.DOCKER_USERNAME }}/gotestcon:latest
-    Test:
+  Test:
     runs-on: ubuntu-latest
 
     steps:
