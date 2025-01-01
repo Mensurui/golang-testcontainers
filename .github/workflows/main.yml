@@ -76,6 +76,14 @@ jobs:
             exit 1
           fi
 
+      - name: Run docker
+        run: |
+          docker run -e TESTCONADDR='postgres://testcontainer:testcontainer123@postgres:5432/testcontainersdb?sslmode=disable' \
+          -e TESTPORTADDR=':50051' \
+          --network app-network \
+          gotestcon-container
+
+
       # Step 5: Run tests inside the container
       - name: Run tests
         run: docker exec gotestcon-container go test -v ./...
