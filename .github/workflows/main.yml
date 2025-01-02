@@ -58,6 +58,10 @@ jobs:
       - name: Pull Docker Image
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/gotest:latest
 
+      - name: Install grpcurl
+        run: |
+          sudo apt-get update && sudo apt-get install -y grpcurl
+
       - name: Prepare Docker Compose
         run: |
           docker compose -f docker-compose.yml config
@@ -69,7 +73,7 @@ jobs:
       - name: Check Application Health
         run: |
           sleep 10
-          curl -f http://localhost:8080/health || exit 1
+          grpcurl -plaintext localhost:9191 protobuf.UserService.CheckHealth || exit 1
 
       - name: Stop and Remove Docker Containers
         run: |
