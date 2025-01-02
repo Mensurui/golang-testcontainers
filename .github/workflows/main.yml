@@ -39,4 +39,4 @@ jobs:
       - name: Push to Dockerhub
         run: |
           docker tag gotest ${{ secrets.DOCKER_USERNAME }}/gotest:latest
-          docker push ${{ secrets.DOCKER_PASSWORD }}/gotest:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/gotest:latest
