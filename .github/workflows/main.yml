@@ -65,17 +65,21 @@ jobs:
           sudo mv grpcurl /usr/local/bin
 
 
-      - name: Start Service with Docker Compose
+      - name: Prepare Docker Compose
         run: |
-          docker compose up
-          sleep 50
+          docker compose -f docker-compose.yml config
+
+      - name: Start Services with Docker Compose
+        run: |
+          docker compose up -d
+          for i in {1..60}; do
+            docker compose logs postgres | grep "database system is ready to accept connections" && break
+            sleep 1
+          done
+
+      - name: Health Check
+        run: |
           grpcurl -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth || (docker compose logs && exit 1)
-
-
-      - name: Check Application Health
-        run: |
-          sleep 30
-          grpcurl -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth || exit 1
 
       - name: Stop and Remove Docker Containers
         run: |
