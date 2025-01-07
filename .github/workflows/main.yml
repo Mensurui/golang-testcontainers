@@ -72,6 +72,8 @@ jobs:
       - name: Start Service with Docker Compose
         run: |
           docker compose up -d
+          grpcurl -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth || exit 1
+
 
       - name: Check Application Health
         run: |
