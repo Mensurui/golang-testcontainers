@@ -45,10 +45,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error connecting: %v", err)
 	}
+	log.Printf("Connected successfully on port: %v", testingPort)
 	err = gs.Serve(l)
 	if err != nil {
 		log.Fatalf("Error serving on grpc: %v", err)
 	}
+	log.Printf("Successfully serving on port: %v", testingPort)
 }
 
 func openDB(cfg config) (*sql.DB, error) {

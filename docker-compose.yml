@@ -18,7 +18,9 @@ services:
 
   goapp:
     image: golang:1.23-bookworm
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: goapp-1
     depends_on:
       postgres:

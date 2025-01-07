@@ -65,13 +65,9 @@ jobs:
           sudo mv grpcurl /usr/local/bin
 
 
-      - name: Prepare Docker Compose
-        run: |
-          docker compose -f docker-compose.yml config
-
       - name: Start Service with Docker Compose
         run: |
-          docker compose up -d
+          docker compose up
           sleep 50
           grpcurl -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth || (docker compose logs && exit 1)
 
