@@ -1,2 +1,2 @@
 # golang-testcontainers
-### its all about retrying
+### its all about retrying and retrying
