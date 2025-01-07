@@ -73,7 +73,7 @@ jobs:
         run: |
           docker compose up -d
           sleep 15
-          grpcurl -plaintext localhost:9191 protobuf.UserService.CheckHealth || exit
+          grpcurl -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth
 
 
       - name: Check Application Health
