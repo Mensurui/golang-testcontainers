@@ -11,7 +11,7 @@ services:
     networks:
       - gotestcon
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U testcontainer"]
+      test: ["CMD-SHELL", "pg_isready -U testcontainer -d testcontainersdb"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -20,6 +20,9 @@ services:
     image: golang:1.23-bookworm
     build: .
     container_name: goapp-1
+    depends_on:
+      postgres:
+        condition: service_healthy
     environment:
       TESTPORTADDR: '0.0.0.0:9191'
       TESTCONADDR: 'postgres://testcontainer:testcontainer123@postgres-1:5432/testcontainersdb?sslmode=disable'
