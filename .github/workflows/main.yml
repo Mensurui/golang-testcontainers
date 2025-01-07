@@ -81,6 +81,7 @@ jobs:
       - name: Health Check
         run: |
           docker compose logs goapp
+          docker logs goapp-1
           docker ps -a
           grpcurl -v -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth || (docker compose logs && exit 1)
 
