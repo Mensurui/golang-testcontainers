@@ -79,7 +79,9 @@ jobs:
 
       - name: Health Check
         run: |
-          grpcurl -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth || (docker compose logs && exit 1)
+          docker compose logs goapp
+          docker ps
+          grpcurl -v -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth || (docker compose logs && exit 1)
 
       - name: Stop and Remove Docker Containers
         run: |
