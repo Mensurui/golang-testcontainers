@@ -71,6 +71,7 @@ jobs:
 
       - name: Start Services with Docker Compose
         run: |
+          docker compose down
           docker compose up -d
           for i in {1..60}; do
             docker compose logs postgres | grep "database system is ready to accept connections" && break
@@ -81,6 +82,8 @@ jobs:
         run: |
           docker compose logs goapp
           docker ps
+          docker ps -l
+          docker logs goapp
           grpcurl -v -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth || (docker compose logs && exit 1)
 
       - name: Stop and Remove Docker Containers
