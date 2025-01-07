@@ -78,12 +78,12 @@ jobs:
             sleep 1
           done
 
-      - name: Health Check
+      - name: Goapp Docker check
         run: |
           docker compose logs goapp
-          docker ps
-          docker ps -l
-          docker logs goapp
+
+      - name: Health Check
+        run: |
           grpcurl -v -plaintext 0.0.0.0:9191 protobuf.UserService.CheckHealth || (docker compose logs && exit 1)
 
       - name: Stop and Remove Docker Containers
