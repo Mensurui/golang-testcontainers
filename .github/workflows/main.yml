@@ -68,11 +68,13 @@ jobs:
       - name: Prepare Docker Compose
         run: |
           docker compose -f docker-compose.yml config
+          docker ps -a
 
       - name: Start Services with Docker Compose
         run: |
           docker compose down
           docker compose up -d
+          docker compose logs goapp
           for i in {1..60}; do
             docker compose logs postgres | grep "database system is ready to accept connections" && break
             sleep 1

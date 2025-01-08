@@ -23,4 +23,3 @@ WORKDIR /app
 COPY --from=build /app/bin/project /app/project
 
 CMD ["/app/project"]
-
