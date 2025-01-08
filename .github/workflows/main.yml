@@ -100,4 +100,4 @@ jobs:
 
       - name: Stop and Remove Docker Containers
         run: |
-          docker-compose down
+          docker compose down
