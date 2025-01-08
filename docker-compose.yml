@@ -30,7 +30,6 @@ services:
       TESTCONADDR: 'postgres://testcontainer:testcontainer123@postgres-1:5432/testcontainersdb?sslmode=disable'
     ports:
       - "9191:9191"
-    command: ["./project/project-binary"]
     networks:
       - gotestcon
 
@@ -38,7 +37,7 @@ services:
     image: migrate/migrate
     volumes:
       - ./project/migrations:/migrations
-    command: ["-path", "/migrations", "-database", "postgres://testcontainer:testcontainer123@postgres-1/testcontainersdb?sslmode=disable", "up", "3"]
+    command: ["-path", "/migrations", "-database", "postgres://testcontainer:testcontainer123@postgres-1:5432/testcontainersdb?sslmode=disable", "up"]
     depends_on:
       postgres:
         condition: service_healthy
