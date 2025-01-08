@@ -36,7 +36,7 @@ services:
   migrate:
     image: migrate/migrate
     volumes:
-      - ${PWD}/project/migrations:/migrations
+      - ./project/migrations:/migrations
     command: ["-path", "/migrations", "-database", "postgres://testcontainer:testcontainer123@postgres-1/testcontainersdb?sslmode=disable", "up", "3"]
     depends_on:
       postgres:
