@@ -72,6 +72,7 @@ jobs:
       - name: Build and Start Services
         run: |
           docker compose down
+          docker compose build goapp
           docker compose up -d
           docker ps -a
 
